@@ -1,0 +1,25 @@
+{% extends 'introduce/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12" style="margin-top:20px">
+            {% if item.image %}
+                <img src="{{ item.image.url }}" alt="" height="100">
+            {% endif %}
+            <h3>{{ item.name }}</h3>
+            <p>{{ item.gender }}</p>
+            <p>{{ item.age }}</p>
+            <hr/>
+            <p>
+                <a href="{% url 'update' id=item.id %}">
+                    <button class="btn btn-info">수정하기</button>
+                </a>
+                <a href="{% url 'delete' id=item.id %}">
+                    <button class="btn btn-danger">삭제하기</button>
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

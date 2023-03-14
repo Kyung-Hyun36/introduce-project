@@ -1,0 +1,44 @@
+{% extends 'introduce/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    {% for item in people %}
+    <div class="row restaurant-item" style="margin:20px auto;">
+        <div class="col-sm-12">
+            <div class="card border-secondary">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ item.gender }}, {{ item.age }}</h6>
+                    <a href="{% url 'detail' id=item.id %}" class="card-link">자세히 보기</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <div class="pagination">
+                <span class="step-links text-center" style="width:100%">
+                    {% if people.has_previous %}
+                        <a href="?page=1">&laquo;</a>
+                        <a href="?page={{ people.previous_page_number }}">{{ people.previous_page_number }}</a>
+                    {% endif %}
+
+                    <span class="current">
+                        {{ people.number }}
+                    </span>
+
+                    {% if people.has_next %}
+                        <a href="?page={{ people.next_page_number }}">{{ people.next_page_number }}</a>
+                        {% if people.next_page_number < people.paginator.num_pages %}
+                        ...
+                        <a href="?page={{ people.paginator.num_pages }}">{{ people.paginator.num_pages }}</a>
+                        {% endif %}
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
