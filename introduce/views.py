@@ -23,6 +23,8 @@ def list(request):
 def create(request):
     if request.method == "POST":
         form = PeopleForm(request.POST, request.FILES)
+        print("----------------------------------------")
+        print(form.is_valid())
         if form.is_valid():
             new_item = form.save()
         return HttpResponseRedirect('/')
@@ -41,17 +43,19 @@ def update(request, id):
     if request.method == 'POST':
         item = get_object_or_404(People, pk=id)
         password = request.POST.get('password', '')
-        form = UpdatePeopleForm(request.POST, instance=item)
-        if form.is_valid() and password == item.password:
-            item = form.save()
-        elif password != item.password:
+        form = UpdatePeopleForm(request.POST, request.FILES, instance=item)
+        print("------------------------------")
+        print(form.errors)
+        if password != item.password:
             messages.warning(request, "비밀번호가 틀렸습니다.")
             return redirect('update', id=id)
+        elif form.is_valid():
+            item = form.save()
     elif request.method == "GET":
         item = get_object_or_404(People, pk=id)
         form = PeopleForm(instance=item)
         return render(request, 'introduce/update.html', {'form': form, 'item': item})
-    return HttpResponseRedirect('/')
+    return render(request, 'introduce/detail.html', {'item': item})
 
 
 def delete(request, id):

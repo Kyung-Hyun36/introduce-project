@@ -1,15 +1,45 @@
 {% extends 'introduce/base.html' %}
 {% load static %}
 {% block content %}
-<div class="container">
+<div class="container" style="max-width:800px">
     <div class="row">
-        <div class="col-sm-12" style="margin-top:20px">
-            {% if item.image %}
-                <img src="{{ item.image.url }}" alt="" height="100">
-            {% endif %}
-            <h3>{{ item.name }}</h3>
-            <p>{{ item.gender }}</p>
-            <p>{{ item.age }}</p>
+        {% if item.image %}
+        <div class="col-sm-2" style="margin-top:20px; margin-right:50px">
+            <img src="{{ item.image.url }}" width="150" height="200">
+        </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-12" style="margin-top:20px">
+                <b style="font-size:30px">{{ item.name }}</b>
+                {{ item.gender }}/{{ item.age }}세
+            </div>
+            <div class="col-3" style="padding-right:0; width:10px">
+                주소:
+                <br/>
+                직업:
+                <br/>
+                전화번호:
+                <br/>
+                E-mail:
+                <br/>
+                취미:
+            </div>
+            <div class="col-6" style="padding-left:0">
+                {{ item.address }}
+                <br/>
+                {{ item.job }}
+                <br/>
+                {{ item.cellphone }}
+                <br/>
+                {{ item.email }}
+                <br/>
+                {{ item.hobby }}
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-12" align="right">
             <hr/>
             <p>
                 <a href="{% url 'update' id=item.id %}">
@@ -21,5 +51,6 @@
             </p>
         </div>
     </div>
+
 </div>
 {% endblock %}
